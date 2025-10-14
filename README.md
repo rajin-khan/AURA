@@ -105,16 +105,19 @@ graph TD
         A(📸 Image Sensor) -- Raw Data --> B(🔒 Secure Channel);
         B --> C{🛡️ Trusted Execution Environment};
     end
-
-    subgraph TEE [Trusted Execution Environment (Isolated)]
-        C -- Processes Data --> D[⚙️ Image Signal Processing];
-        E(🔑 Secure Key Storage<br>Private Key) --> F[✍️ Cryptographic Signing];
+    
+    subgraph TEE [Trusted Execution Environment Isolated]
+        D[⚙️ Image Signal Processing];
+        E(🔑 Secure Key Storage<br/>Private Key);
+        F[✍️ Cryptographic Signing];
+        C -- Processes Data --> D;
+        E --> F;
         D -- Processed Data --> F;
     end
     
     F -- Signed Data --> G[✅ Completed & Signed Image];
-    G --> H(💾 Storage<br>Memory Card);
-
+    G --> H(💾 Storage<br/>Memory Card);
+    
     style TEE fill:#f8f9fa,stroke:#495057,stroke-width:2px,stroke-dasharray: 5 5
     style A fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
     style E fill:#fff3e0,stroke:#f57c00,stroke-width:2px
