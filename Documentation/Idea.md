@@ -92,7 +92,7 @@ graph TD
 1.  **Encrypt Firmware:** Investigate methods to encrypt the camera sensor's firmware to prevent unauthorized modifications.
 2.  **Chain of Trust:** Establish a secure chain of trust from the sensor's raw data output to the final, processed image.
 3.  **Encrypt Pipeline:** Explore the encryption of the entire image processing pipeline.
-4.  **Trusted Execution Environment (TEE):** Utilize a TEE to process raw data and generate a completed, signed image in a secure environment.```
+4.  **Trusted Execution Environment (TEE):** Utilize a TEE to process raw data and generate a completed, signed image in a secure environment.
 
 ## 🔬 Research Angles & Implementation Paths
 
