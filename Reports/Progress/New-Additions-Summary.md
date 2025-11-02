@@ -242,4 +242,4 @@ The project now has:
 
 ---
 
-*Last updated: January 2025*
+*Last updated: November 2025*
