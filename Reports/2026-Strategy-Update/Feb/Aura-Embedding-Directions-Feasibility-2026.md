@@ -68,14 +68,14 @@ In short: strong idea, but the geometry is likely structured and local rather th
 
 ```mermaid
 flowchart LR
-    A[Original Image] --> B[Embedding E(x)]
-    C[Edited Image] --> D[Embedding E(x')]
-    B --> E[Delta = E(x') - E(x)]
+    A[Original Image] --> B[Embedding of Original]
+    C[Edited Image] --> D[Embedding of Edited]
+    B --> E[Displacement Vector d]
     D --> E
     E --> F{Closest Region}
     F --> G[Cosmetic Subspace]
-    F --> H[AI-Edit Subspace]
-    F --> I[Out-of-Distribution / Inconclusive]
+    F --> H[AI Edit Subspace]
+    F --> I[Out of Distribution or Inconclusive]
 
     style A fill:#f3f3f3,stroke:#4f4f4f,color:#111
     style B fill:#e6e6e6,stroke:#4f4f4f,color:#111
@@ -209,11 +209,11 @@ These are manageable if we design the dataset and evaluation carefully.
 
 ```mermaid
 flowchart TD
-    A[Incoming Media] --> B{Trusted C2PA present?}
-    B -->|Yes| C[Tier 1: Provenance-led Decision]
+    A[Incoming Media] --> B{Trusted C2PA present}
+    B -->|Yes| C[Tier 1 Provenance Led Decision]
     B -->|No or weak| D[Forensic Branch]
     D --> E[Embedding Direction Analysis]
-    E --> F[AI-like / Cosmetic-like / Inconclusive]
+    E --> F[AI like, Cosmetic like, or Inconclusive]
     C --> G[Unified Risk Card]
     F --> G
 
