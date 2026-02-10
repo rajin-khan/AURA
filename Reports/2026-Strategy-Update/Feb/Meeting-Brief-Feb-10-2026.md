@@ -61,6 +61,9 @@ Working hypothesis:
 > [!NOTE]
 > The strongest framing is "learned edit subspaces" rather than "one AI direction."
 
+> [!IMPORTANT]
+> This remains a theory-first hypothesis for now; we need controlled validation experiments before we can claim verified accuracy.
+
 ## Immediate next steps (this week)
 
 <table>

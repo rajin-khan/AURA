@@ -23,6 +23,9 @@ The central question is whether these `delta` vectors carry consistent structure
 
 This is conceptually similar to meaningful directions in text embedding spaces.
 
+> [!WARNING]
+> At this stage, this is a theory-driven hypothesis. We must verify it with controlled experiments before making any accuracy claims.
+
 ---
 
 ## High-level feasibility
@@ -34,6 +37,23 @@ The main refinement is that we should not expect a single universal "AI directio
 - **learned edit subspaces** conditioned on content/domain.
 
 In short: strong idea, but the geometry is likely structured and local rather than one global axis.
+
+<table>
+  <thead>
+    <tr>
+      <th>Current confidence level</th>
+      <th>What is established</th>
+      <th>What still must be verified</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Theoretical feasibility: high</td>
+      <td>There is a plausible geometric signal in embedding displacements</td>
+      <td>Whether the signal is accurate, stable, and robust enough for real use</td>
+    </tr>
+  </tbody>
+</table>
 
 <table>
   <thead>
@@ -238,6 +258,9 @@ flowchart TD
   - uncertainty behavior.
 
 If these first results are positive, this can become one of Aura's strongest technical contributions.
+
+> [!IMPORTANT]
+> We should treat all current claims as provisional until we complete theoretical and empirical validation with reproducible benchmarks.
 
 > [!TIP]
 > For the first meeting checkpoint, one UMAP plot + one calibration curve + one confusion matrix is usually enough to show progress convincingly.
