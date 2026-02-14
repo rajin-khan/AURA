@@ -1,0 +1,3 @@
+# Example manifest (replace with your local dataset)
+{"id":"demo_cosmetic","original_path":"src/aura/data/paired_dataset/original/demo.jpg","edited_path":"src/aura/data/paired_dataset/edited/demo_cosmetic.jpg","label":"cosmetic","notes":"placeholder"}
+{"id":"demo_ai","original_path":"src/aura/data/paired_dataset/original/demo.jpg","edited_path":"src/aura/data/paired_dataset/edited/demo_ai.jpg","label":"ai","notes":"placeholder"}
