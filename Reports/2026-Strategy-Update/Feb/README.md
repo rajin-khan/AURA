@@ -39,5 +39,30 @@ The codebase is being rewritten from scratch to match these docs.
 
 A new contributor should be able to:
 - read these docs,
-- run one command that produces artifacts,
-- and see a first, honest baseline result + limitations.
+- run **one command** that produces artifacts they can show,
+- then run **one real baseline** on a paired dataset,
+- and see a first, honest result + limitations.
+
+### Commands (from `Code/`)
+
+1) **Instant demo (no dataset required)**
+
+```bash
+make demo
+```
+
+Produces:
+- `Code/runs/demo/risk_card.json`
+
+2) **Real baseline (needs paired dataset + deps)**
+
+```bash
+pip install torch open_clip_torch pillow scikit-learn pandas
+PYTHONPATH=src python -m aura.forensics.run_displacement_baseline \
+  --manifest src/aura/data/paired_dataset/manifest.jsonl \
+  --out runs/001
+```
+
+Produces:
+- `Code/runs/001/metrics.json`
+- `Code/runs/001/pairs_features.csv`
