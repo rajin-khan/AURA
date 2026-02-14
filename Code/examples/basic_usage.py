@@ -44,44 +44,44 @@ def example_1_signing():
 
 
 def example_2_verification():
-    """Example 2: Verify an image"""
+    """Example 2: Verify an image (registry-less + registry-backed)."""
     print("\n=== Example 2: Verifying an Image ===")
-    
-    # Set up device registry
+
+    signer = AuraSigner(device_id="AURA-DEV-12345")
+
+    # Simulate image data (in production, would load from file)
+    image_data = b"This is simulated image data for testing purposes"
+
+    # Sign the image (produces a certificate containing the public key PEM)
+    signature = signer.sign_image(image_data=image_data)
+
+    # A) Verify WITHOUT a registry entry (uses public key from the certificate)
+    verifier_no_registry = AuraVerifier(DeviceRegistry())
+    result_a = verifier_no_registry.verify_image(image_data, signature.to_dict())
+
+    print("A) Registry-less verification:")
+    print(f"   Authentic: {result_a.authentic}")
+    print(f"   Level: {result_a.verification_level.value}")
+    print(f"   Confidence: {result_a.confidence:.2f}")
+
+    # B) Verify WITH a registry entry (stronger attestation claim)
     registry = DeviceRegistry()
     registry.register_device(
         device_id="AURA-DEV-12345",
-        public_key="DEMO_PUBLIC_KEY",
-        metadata={"manufacturer": "CameraCorp", "model": "ProShot X1"}
+        public_key=signer.get_public_key_pem(),
+        metadata={"manufacturer": "CameraCorp", "model": "ProShot X1"},
     )
-    
-    # Initialize verifier
-    verifier = AuraVerifier(registry)
-    
-    # Simulate image and signature
-    image_data = b"This is simulated image data for testing purposes"
-    image_hash = hashlib.sha256(image_data).hexdigest()
-    
-    signature_data = {
-        "device_id": "AURA-DEV-12345",
-        "timestamp": "2025-01-15T10:30:00Z",
-        "image_hash": image_hash,
-        "signature": "SIMULATED_SIGNATURE_" + image_hash[:16],
-        "device_certificate": '{"device_id": "AURA-DEV-12345"}',
-        "processing_chain": []
-    }
-    
-    # Verify
-    result = verifier.verify_image(image_data, signature_data)
-    
-    print("Verification Result:")
-    print(f"Authentic: {result.authentic}")
-    print(f"Level: {result.verification_level.value}")
-    print(f"Confidence: {result.confidence:.2f}")
-    if result.reason:
-        print(f"Reason: {result.reason}")
-    print("\nFull result (JSON):")
-    print(result.to_json())
+
+    verifier_with_registry = AuraVerifier(registry)
+    result_b = verifier_with_registry.verify_image(image_data, signature.to_dict())
+
+    print("\nB) Registry-backed verification:")
+    print(f"   Authentic: {result_b.authentic}")
+    print(f"   Level: {result_b.verification_level.value}")
+    print(f"   Confidence: {result_b.confidence:.2f}")
+
+    if result_b.reason:
+        print(f"   Reason: {result_b.reason}")
 
 
 def example_3_change_detection():
