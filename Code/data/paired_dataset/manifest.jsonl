@@ -1,0 +1,4 @@
+# Example manifest (replace with your real paired dataset)
+# One JSON object per line.
+{"id":"demo_cosmetic","original_path":"data/paired_dataset/original/demo.jpg","edited_path":"data/paired_dataset/edited/demo_cosmetic.jpg","label":"cosmetic","notes":"example placeholder (not committed images)"}
+{"id":"demo_ai","original_path":"data/paired_dataset/original/demo.jpg","edited_path":"data/paired_dataset/edited/demo_ai.jpg","label":"ai","notes":"example placeholder (not committed images)"}
