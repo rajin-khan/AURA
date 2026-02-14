@@ -1,11 +1,15 @@
-# Aura Core Dependencies
-cryptography>=41.0.0
-flask>=3.0.0
-flask-cors>=4.0.0
-Pillow>=10.0.0
+# AURA (Feb 2026 rewrite)
+
+# Required (keep minimal)
 numpy>=1.24.0
 
-# Optional: For advanced image analysis
-# opencv-python>=4.8.0
-# scikit-image>=0.21.0
-# torch>=2.0.0  # For AI detection models
+# Optional / research extras
+# - for CLIP embeddings
+# torch
+# open_clip_torch
+# transformers
+# pillow
+
+# - for baselines + artifacts
+# scikit-learn
+# pandas
