@@ -296,6 +296,36 @@ Run examples:
 python examples/basic_usage.py
 ```
 
+### Feb 2026: practical displacement baseline (first implementation)
+
+This is the first "get our hands dirty" implementation of the strategy docs in
+`Reports/2026-Strategy-Update/Feb/`.
+
+It:
+- embeds paired images with CLIP
+- computes displacement features `d = E(edited) - E(original)`
+- trains a small baseline classifier (cosmetic vs ai)
+- writes artifacts under `Code/runs/`
+
+1) Create your paired dataset manifest:
+
+- See: `data/paired_dataset/README.md`
+
+2) Install optional deps:
+
+```bash
+pip install torch open_clip_torch pillow scikit-learn pandas
+```
+
+3) Run the baseline (from `Code/`):
+
+```bash
+python -m forensics.run_displacement_baseline \
+  --manifest data/paired_dataset/manifest.jsonl \
+  --out runs/001 \
+  --device cpu
+```
+
 Test API server:
 
 ```bash
