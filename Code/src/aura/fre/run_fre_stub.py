@@ -26,6 +26,13 @@ from aura.fre.schema import EvidenceItem
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--input", required=True, help="Path to media (image for now)")
+
+    # Allow injecting stream posteriors to test boundaries + downstream tooling.
+    ap.add_argument("--p-provenance-auth", type=float, default=0.5, help="P(authentic | provenance) in [0,1]")
+    ap.add_argument("--p-forensic-synth", type=float, default=0.5, help="P(synthetic | forensics) in [0,1]")
+    ap.add_argument("--p-sem-anomaly", type=float, default=0.5, help="P(anomaly | semantics) in [0,1]")
+
+    ap.add_argument("--out", type=str, default="-", help="Output path (default: stdout). Use '-' for stdout")
     args = ap.parse_args()
 
     p = Path(args.input)
@@ -33,10 +40,9 @@ def main() -> int:
         raise SystemExit(f"Input not found: {p}")
 
     # Placeholder evidence — these will become real modules.
-    # For now, we set them to 'unknown-ish' values.
-    p_prov_auth = 0.5
-    p_forensic_synth = 0.5
-    p_sem_anomaly = 0.5
+    p_prov_auth = args.p_provenance_auth
+    p_forensic_synth = args.p_forensic_synth
+    p_sem_anomaly = args.p_sem_anomaly
 
     evidence = [
         EvidenceItem(
@@ -75,7 +81,13 @@ def main() -> int:
         "contradictions": contradictions,
     }
 
-    print(json.dumps(out, indent=2))
+    payload = json.dumps(out, indent=2)
+
+    if args.out == "-":
+        print(payload)
+    else:
+        Path(args.out).write_text(payload + "\n", encoding="utf-8")
+
     return 0
 
 

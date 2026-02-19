@@ -28,6 +28,7 @@ If you’ve only read the Feb docs and you’re wondering “what can I actually
 From inside `Code/`:
 
 ```bash
+make venv
 make demo
 ```
 
@@ -43,6 +44,24 @@ What you can say to your instructor:
 
 ## What can be run today (real pipeline)
 
+### 0) FRE-v2 stub runner (validated + testable)
+
+```bash
+make venv
+make fre INPUT=path/to/file.jpg
+```
+
+You can also inject stream posteriors to test decision boundaries:
+
+```bash
+. .venv/bin/activate
+python -m aura.fre.run_fre_stub \
+  --input path/to/file.jpg \
+  --p-provenance-auth 0.95 \
+  --p-forensic-synth 0.10 \
+  --p-sem-anomaly 0.20
+```
+
 ### 1) Displacement baseline (Step 1 from meeting brief)
 
 Implements:
@@ -53,7 +72,15 @@ Code:
 
 #### Setup
 
-Install required deps:
+This repo uses a virtualenv for editable installs (PEP 668 on Debian blocks system-wide pip installs).
+
+```bash
+make venv
+```
+
+(Equivalent: `python -m venv .venv && . .venv/bin/activate && pip install -e .`)
+
+Install required deps (if you’re not using the editable install route):
 
 ```bash
 pip install -r requirements.txt

@@ -1,3 +1,7 @@
 __pycache__/
 *.pyc
 runs/
+
+# local venv + editable build artifacts
+.venv/
+src/*.egg-info/
