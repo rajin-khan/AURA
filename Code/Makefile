@@ -1,4 +1,4 @@
-.PHONY: help demo fre baseline
+.PHONY: help demo fre baseline venv test
 
 help:
 	@echo "AURA (Feb 2026) — handy commands"
@@ -20,3 +20,10 @@ baseline:
 		--manifest src/aura/data/paired_dataset/manifest.jsonl \
 		--out runs/001 \
 		--device cpu
+
+venv:
+	python -m venv .venv
+	. .venv/bin/activate && pip install -e .
+
+test:
+	. .venv/bin/activate && python -m unittest discover -s tests -p "test_*.py" -q
