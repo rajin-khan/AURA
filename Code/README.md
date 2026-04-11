@@ -171,9 +171,28 @@ Aura now includes a first-pass data engine scaffold for paired manifests:
 - `src/aura/data_engine/splits.py` — deterministic split assignment
 - `scripts/data/validate_manifest.py` — CLI validator
 - `scripts/data/make_splits.py` — CLI split generator
+- `src/aura/data_engine/benchmark_schema.py` — public benchmark sample schema
+- `src/aura/data_engine/benchmark_manifest.py` — benchmark manifest helpers
+- `scripts/data/register_genimage_subset.py` — register a local GenImage subset into a benchmark manifest
 
 This is not the full retrieval/editing automation yet.
 It is the first practical layer that makes that automation possible.
+
+## GenImage subset intake (new)
+
+Planned local staging location:
+- `data/raw/public/genimage/`
+
+When a small local subset exists, register it like this:
+
+```bash
+PYTHONPATH=src python scripts/data/register_genimage_subset.py \
+  --root data/raw/public/genimage/subsets/genimage-mini-v1 \
+  --dataset-name genimage-mini-v1 \
+  --out data/manifests/public/genimage-mini-v1.jsonl
+```
+
+This gives Aura a benchmark manifest for GenImage without pretending it is a true original→edited pair dataset.
 
 ## Progress checklist (what to show your instructor)
 
