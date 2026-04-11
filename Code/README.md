@@ -214,6 +214,15 @@ python scripts/data/sample_genimage_subset.py \
   --out-dir data/processed/genimage-mini-v1-selection
 ```
 
+Then register only the chosen files:
+
+```bash
+python scripts/data/register_benchmark_from_selection.py \
+  --selection-dir data/processed/genimage-mini-v1-selection \
+  --dataset-name genimage-mini-v1 \
+  --out data/manifests/public/genimage-mini-v1.jsonl
+```
+
 The current policy uses:
 - seed `20260412`
 - `2000` real images
