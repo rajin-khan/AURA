@@ -94,12 +94,30 @@ pip install torch open_clip_torch pillow scikit-learn pandas
 
 #### Data
 
-Create a paired dataset manifest:
+Legacy toy example:
 - `src/aura/data/paired_dataset/README.md`
+
+New data-engine layout:
+- `data/README.md`
+- `data/manifests/paired/example_pairs.v1.jsonl`
 
 You’ll need paired examples:
 - original → cosmetic edit
 - original → AI edit
+
+Validate a manifest:
+
+```bash
+make validate-manifest MANIFEST=data/manifests/paired/example_pairs.v1.jsonl
+```
+
+Generate deterministic splits:
+
+```bash
+make make-splits \
+  MANIFEST=data/manifests/paired/example_pairs.v1.jsonl \
+  OUT=data/processed/splits/example_pairs.with_splits.jsonl
+```
 
 #### Run
 
@@ -142,6 +160,20 @@ Caveat:
 - many are not “paired original→edited” by default, so displacement is harder unless you construct pairs.
 
 ---
+
+## Data engine (new)
+
+Aura now includes a first-pass data engine scaffold for paired manifests:
+
+- `src/aura/data_engine/schema.py` — canonical pair sample schema
+- `src/aura/data_engine/manifest.py` — manifest load/write helpers
+- `src/aura/data_engine/validate.py` — validation logic
+- `src/aura/data_engine/splits.py` — deterministic split assignment
+- `scripts/data/validate_manifest.py` — CLI validator
+- `scripts/data/make_splits.py` — CLI split generator
+
+This is not the full retrieval/editing automation yet.
+It is the first practical layer that makes that automation possible.
 
 ## Progress checklist (what to show your instructor)
 

@@ -1,4 +1,4 @@
-.PHONY: help demo fre baseline venv test
+.PHONY: help demo fre baseline venv test validate-manifest make-splits
 
 help:
 	@echo "AURA (Feb 2026) — handy commands"
@@ -6,6 +6,8 @@ help:
 	@echo "make demo        # quick sanity demo (risk card + artifact folder)"
 	@echo "make fre INPUT=...  # run FRE-v2 stub on a file"
 	@echo "make baseline    # run displacement baseline (needs manifest + optional deps)"
+	@echo "make validate-manifest MANIFEST=...  # validate pair manifest"
+	@echo "make make-splits MANIFEST=... OUT=... # assign train/val/test splits"
 	@echo
 	@echo "See Code/README.md for full instructions."
 
@@ -27,3 +29,9 @@ venv:
 
 test:
 	. .venv/bin/activate && python -m unittest discover -s tests -p "test_*.py" -q
+
+validate-manifest:
+	PYTHONPATH=src python scripts/data/validate_manifest.py --manifest "$(MANIFEST)"
+
+make-splits:
+	PYTHONPATH=src python scripts/data/make_splits.py --manifest "$(MANIFEST)" --out "$(OUT)"
