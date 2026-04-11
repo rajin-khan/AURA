@@ -219,6 +219,9 @@ The current policy uses:
 - `2000` real images
 - `250` synthetic images per generator
 
+Operational guidance for the first real intake is documented in:
+- `../Reports/2026-Strategy-Update/Feb/GenImage-Ingestion-Runbook-v1-2026.md`
+
 ## Progress checklist (what to show your instructor)
 
 ### Week 1 — runnable scaffold + artifacts
