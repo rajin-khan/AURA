@@ -183,6 +183,18 @@ It is the first practical layer that makes that automation possible.
 Planned local staging location:
 - `data/raw/public/genimage/`
 
+Canonical first subset:
+- `data/raw/public/genimage/subsets/genimage-mini-v1/`
+  - `real/`
+  - `synthetic/adm/`
+  - `synthetic/biggan/`
+  - `synthetic/glide/`
+  - `synthetic/midjourney/`
+  - `synthetic/stable_diffusion_v1_4/`
+  - `synthetic/stable_diffusion_v1_5/`
+  - `synthetic/vqdm/`
+  - `synthetic/wukong/`
+
 When a small local subset exists, register it like this:
 
 ```bash

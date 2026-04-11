@@ -15,7 +15,8 @@ IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".webp", ".bmp"}
 
 
 def detect_label_and_generator(path: Path) -> tuple[str, str | None]:
-    parts = {p.lower() for p in path.parts}
+    parts_list = [p.lower() for p in path.parts]
+    parts = set(parts_list)
     generator_names = [
         "adm",
         "biggan",
@@ -29,7 +30,9 @@ def detect_label_and_generator(path: Path) -> tuple[str, str | None]:
     for g in generator_names:
         if g in parts:
             return "synthetic", g
-    if "nature" in parts or "real" in parts:
+    if "real" in parts:
+        return "real", None
+    if "nature" in parts:
         return "real", None
     return "unknown", None
 
@@ -50,7 +53,11 @@ def main() -> int:
         label, generator = detect_label_and_generator(path)
         rel = path.relative_to(root)
         sample_id = str(rel).replace(os.sep, "__")
-        class_name = rel.parts[-2] if len(rel.parts) >= 2 else None
+        class_name = None
+        if "real" in rel.parts and len(rel.parts) >= 3:
+            class_name = rel.parts[-2]
+        elif "synthetic" in rel.parts and len(rel.parts) >= 4:
+            class_name = rel.parts[-2]
         samples.append(
             BenchmarkSample(
                 id=sample_id,
