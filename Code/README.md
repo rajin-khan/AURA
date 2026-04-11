@@ -206,6 +206,19 @@ PYTHONPATH=src python scripts/data/register_genimage_subset.py \
 
 This gives Aura a benchmark manifest for GenImage without pretending it is a true original→edited pair dataset.
 
+A deterministic selection helper is also scaffolded:
+
+```bash
+python scripts/data/sample_genimage_subset.py \
+  --root data/raw/public/genimage/subsets/genimage-mini-v1 \
+  --out-dir data/processed/genimage-mini-v1-selection
+```
+
+The current policy uses:
+- seed `20260412`
+- `2000` real images
+- `250` synthetic images per generator
+
 ## Progress checklist (what to show your instructor)
 
 ### Week 1 — runnable scaffold + artifacts
