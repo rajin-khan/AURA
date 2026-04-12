@@ -1,4 +1,8 @@
+import os
+import sys
 import unittest
+
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
 
 from aura.fre.fusion import fuse_evidence
 from aura.fre.schema import EvidenceItem

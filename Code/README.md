@@ -94,12 +94,30 @@ pip install torch open_clip_torch pillow scikit-learn pandas
 
 #### Data
 
-Create a paired dataset manifest:
+Legacy toy example:
 - `src/aura/data/paired_dataset/README.md`
+
+New data-engine layout:
+- `data/README.md`
+- `data/manifests/paired/example_pairs.v1.jsonl`
 
 You’ll need paired examples:
 - original → cosmetic edit
 - original → AI edit
+
+Validate a manifest:
+
+```bash
+make validate-manifest MANIFEST=data/manifests/paired/example_pairs.v1.jsonl
+```
+
+Generate deterministic splits:
+
+```bash
+make make-splits \
+  MANIFEST=data/manifests/paired/example_pairs.v1.jsonl \
+  OUT=data/processed/splits/example_pairs.with_splits.jsonl
+```
 
 #### Run
 
@@ -142,6 +160,76 @@ Caveat:
 - many are not “paired original→edited” by default, so displacement is harder unless you construct pairs.
 
 ---
+
+## Data engine (new)
+
+Aura now includes a first-pass data engine scaffold for paired manifests:
+
+- `src/aura/data_engine/schema.py` — canonical pair sample schema
+- `src/aura/data_engine/manifest.py` — manifest load/write helpers
+- `src/aura/data_engine/validate.py` — validation logic
+- `src/aura/data_engine/splits.py` — deterministic split assignment
+- `scripts/data/validate_manifest.py` — CLI validator
+- `scripts/data/make_splits.py` — CLI split generator
+- `src/aura/data_engine/benchmark_schema.py` — public benchmark sample schema
+- `src/aura/data_engine/benchmark_manifest.py` — benchmark manifest helpers
+- `scripts/data/register_genimage_subset.py` — register a local GenImage subset into a benchmark manifest
+
+This is not the full retrieval/editing automation yet.
+It is the first practical layer that makes that automation possible.
+
+## GenImage subset intake (new)
+
+Planned local staging location:
+- `data/raw/public/genimage/`
+
+Canonical first subset:
+- `data/raw/public/genimage/subsets/genimage-mini-v1/`
+  - `real/`
+  - `synthetic/adm/`
+  - `synthetic/biggan/`
+  - `synthetic/glide/`
+  - `synthetic/midjourney/`
+  - `synthetic/stable_diffusion_v1_4/`
+  - `synthetic/stable_diffusion_v1_5/`
+  - `synthetic/vqdm/`
+  - `synthetic/wukong/`
+
+When a small local subset exists, register it like this:
+
+```bash
+PYTHONPATH=src python scripts/data/register_genimage_subset.py \
+  --root data/raw/public/genimage/subsets/genimage-mini-v1 \
+  --dataset-name genimage-mini-v1 \
+  --out data/manifests/public/genimage-mini-v1.jsonl
+```
+
+This gives Aura a benchmark manifest for GenImage without pretending it is a true original→edited pair dataset.
+
+A deterministic selection helper is also scaffolded:
+
+```bash
+python scripts/data/sample_genimage_subset.py \
+  --root data/raw/public/genimage/subsets/genimage-mini-v1 \
+  --out-dir data/processed/genimage-mini-v1-selection
+```
+
+Then register only the chosen files:
+
+```bash
+python scripts/data/register_benchmark_from_selection.py \
+  --selection-dir data/processed/genimage-mini-v1-selection \
+  --dataset-name genimage-mini-v1 \
+  --out data/manifests/public/genimage-mini-v1.jsonl
+```
+
+The current policy uses:
+- seed `20260412`
+- `2000` real images
+- `250` synthetic images per generator
+
+Operational guidance for the first real intake is documented in:
+- `../Reports/2026-Strategy-Update/Feb/GenImage-Ingestion-Runbook-v1-2026.md`
 
 ## Progress checklist (what to show your instructor)
 
